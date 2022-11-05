@@ -1,4 +1,4 @@
-FROM novosalus/adoptopenjdk-android-nodejs:latest
+FROM novosalus/adoptopenjdk-android-nodejs:focal-jdk-11
 
 ARG BUILD_DATE
 ARG BUILD_VERSION
@@ -26,12 +26,14 @@ LABEL maintainer="Ritesh Chaudhari <ritesh@novosalus.com>" \
       
 
 ARG CORDOVA_VERSION
-ENV CORDOVA_VERSION=${CORDOVA_VERSION:-10.0.0}
+ENV CORDOVA_VERSION=${CORDOVA_VERSION:-11.0.0}
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 #install ruby(to install fastlane), imagemagick, inkscape
-RUN apt-get -y -q update && \
+
+RUN rm -rf /var/lib/apt/lists/* && \
+    apt-get -y -q update && \
     apt-get -y install libz-dev libiconv-hook1 libiconv-hook-dev build-essential ruby-full imagemagick inkscape
 
 # install fastlane
